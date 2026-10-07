@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Falcon — Where Creativity Takes Flight</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet"/>
+<style>
+:root{
+--bg:#F5EFE6;--bg2:#EDE5D8;--surface:#FBF8F4;--surface2:#F0E9DE;
+--primary:#7A1C2E;--primary-h:#9B2A40;--primary-d:#5A1220;
+--primary-soft:#F5E6E9;--primary-mid:#E8C4CB;
+--accent:#C09060;--accent-soft:#F5EBE0;
+--gold:#D4A843;
+--text:#1A0A10;--text2:#5C3A44;--text3:#9B7A84;
+--border:#DDD0C4;--border2:#E8DDD5;
+--shadow:rgba(122,28,46,.12);--shadow2:rgba(122,28,46,.06);
+--sidebar:260px;--sb-col:70px;
+--r:14px;--r2:8px;--r3:24px;
+--trans:.22s cubic-bezier(.4,0,.2,1);
+}
+[data-theme=dark]{
+--bg:#150810;--bg2:#1E1018;--surface:#241220;--surface2:#2E1828;
+--primary:#C44060;--primary-h:#E05070;--primary-d:#A02040;
+--primary-soft:#2A1020;--primary-mid:#3A1828;
+--accent:#C09060;--accent-soft:#2A1C10;
+--text:#F8EFF2;--text2:#C4A0A8;--text3:#8A6070;
+--border:#3A2030;--border2:#2E1828;
+--shadow:rgba(0,0,0,.4);--shadow2:rgba(0,0,0,.2);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;height:100vh;overflow:hidden;transition:background var(--trans),color var(--trans)}
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);min-width:var(--sidebar);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;overflow:hidden;transition:width var(--trans),min-width var(--trans);position:relative;z-index:100;flex-shrink:0}
+.sidebar.collapsed{width:var(--sb-col);min-width:var(--sb-col)}
+.sb-logo{display:flex;align-items:center;gap:12px;padding:20px 18px 16px;border-bottom:1px solid var(--border2);flex-shrink:0}
+.sb-logo .logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-h) 100%);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px var(--shadow)}
+.sb-logo .logo-mark span{color:#fff;font-size:20px}
+.sb-logo .logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--primary);white-space:nowrap;overflow:hidden;transition:opacity var(--trans),width var(--trans)}
+.sidebar.collapsed .logo-text{opacity:0;width:0}
+.sb-toggle{position:absolute;right:-13px;top:24px;width:26px;height:26px;background:var(--surface);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;color:var(--text2);transition:background var(--trans)}
+.sb-toggle:hover{background:var(--primary-soft)}
+.sb-toggle span{font-size:16px;transition:transform .3s}
+.sidebar.collapsed .sb-toggle span{transform:rotate(180deg)}
+.sb-nav{flex:1;overflow-y:auto;overflow-x:hidden;padding:10px 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sb-section{padding:6px 12px 2px;font-size:10.5px;font-weight:600;color:var(--text3);letter-spacing:.06em;white-space:nowrap;overflow:hidden;transition:opacity var(--trans)}
+.sidebar.collapsed .sb-section{opacity:0;height:0;padding:0}
+.sb-item{display:flex;align-items:center;gap:14px;padding:9px 16px;border-radius:var(--r2);margin:1px 8px;cursor:pointer;color:var(--text2);transition:background var(--trans),color var(--trans);position:relative;white-space:nowrap;overflow:hidden}
+.sb-item:hover{background:var(--primary-soft);color:var(--primary)}
+.sb-item.active{background:var(--primary);color:#fff}
+.sb-item.active .sb-badge{background:rgba(255,255,255,.3);color:#fff}
+.sb-item span.icon{font-size:22px;flex-shrink:0;line-height:1}
+.sb-item .label{font-size:13.5px;font-weight:500;transition:opacity var(--trans),width var(--trans);overflow:hidden}
+.sidebar.collapsed .sb-item .label{opacity:0;width:0}
+.sb-badge{background:var(--primary);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:auto;flex-shrink:0;transition:opacity var(--trans)}
+.sidebar.collapsed .sb-badge{opacity:0;width:0;overflow:hidden}
+.sb-bottom{border-top:1px solid var(--border2);padding:10px 8px 14px;flex-shrink:0}
+.sb-user{display:flex;align-items:center;gap:10px;padding:8px;border-radius:var(--r2);cursor:pointer;transition:background var(--trans)}
+.sb-user:hover{background:var(--surface2)}
+.sb-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700}
+.sb-user .user-info{overflow:hidden}
+.sb-user .user-name{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-user .user-role{font-size:11px;color:var(--text3);white-space:nowrap}
+.sidebar.collapsed .user-info{opacity:0;width:0;overflow:hidden}
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+/* ── TOPBAR ── */
+.topbar{height:60px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;padding:0 20px;flex-shrink:0;z-index:50}
+.topbar .page-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--text);flex-shrink:0;min-width:120px}
+.search-wrap{flex:1;max-width:480px;position:relative}
+.search-wrap input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3);padding:8px 40px 8px 40px;font-size:13.5px;font-family:inherit;color:var(--text);outline:none;transition:border var(--trans),box-shadow var(--trans)}
+.search-wrap input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.search-wrap input::placeholder{color:var(--text3)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:18px}
+.topbar-actions{display:flex;align-items:center;gap:6px;margin-left:auto}
+.tb-btn{width:36px;height:36px;border-radius:50%;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:background var(--trans),color var(--trans);position:relative}
+.tb-btn:hover{background:var(--primary-soft);color:var(--primary)}
+.tb-btn span{font-size:20px}
+.tb-notif::after{content:'';position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--primary);border-radius:50%;border:2px solid var(--surface)}
+.tb-join{background:var(--primary);color:#fff;border:none;border-radius:var(--r3);padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background var(--trans),transform var(--trans)}
+.tb-join:hover{background:var(--primary-h);transform:translateY(-1px)}
+/* ── CONTENT ── */
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:24px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+/* ── PAGE TRANSITIONS ── */
+.page{display:none;animation:fadeIn .25s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* ── COMMON ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;transition:box-shadow var(--trans),transform var(--trans)}
+.card:hover{box-shadow:0 8px 32px var(--shadow);transform:translateY(-2px)}
+h2.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--text);margin-bottom:4px}
+.section-sub{color:var(--text3);font-size:13px;margin-bottom:18px}
+.row-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.see-all{font-size:12.5px;color:var(--primary);font-weight:600;cursor:pointer;text-decoration:none;border:none;background:none;padding:6px 12px;border-radius:var(--r2);transition:background var(--trans)}
+.see-all:hover{background:var(--primary-soft)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-primary{background:var(--primary-soft);color:var(--primary)}
+.badge-gold{background:#FBF3E0;color:#8A6010}
+.badge-green{background:#E6F5EC;color:#1A6B3A}
+.badge-blue{background:#E6EEF8;color:#1A3A6B}
+.stars{color:var(--gold);font-size:12px;letter-spacing:1px}
+.pill{display:inline-flex;align-items:center;gap:4px;background:var(--surface2);color:var(--text2);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);transition:all var(--trans)}
+.pill:hover,.pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--r3);border:none;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all var(--trans)}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-h);transform:translateY(-1px);box-shadow:0 4px 14px var(--shadow)}
+.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
+.btn-outline:hover{background:var(--primary-soft)}
+.btn-ghost{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--bg2);color:var(--text)}
+.avatar{border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--primary),var(--accent))}
+.av-text{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+.tag{background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600}
+/* ── HOME ── */
+.hero{background:linear-gradient(135deg,var(--primary-d) 0%,var(--primary) 45%,var(--primary-h) 100%);border-radius:var(--r3);padding:52px 48px;color:#fff;position:relative;overflow:hidden;margin-bottom:28px}
+.hero::before{content:'';position:absolute;right:-60px;top:-60px;width:360px;height:360px;background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'🦅';position:absolute;right:48px;top:50%;transform:translateY(-50%);font-size:96px;opacity:.18}
+.hero-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.hero-eyebrow span{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;letter-spacing:.04em}
+.hero h1{font-family:'Playfair Display',serif;font-size:46px;font-weight:700;line-height:1.15;margin-bottom:14px;max-width:560px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{font-size:15px;opacity:.85;max-width:480px;line-height:1.65;margin-bottom:28px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-btn{padding:12px 26px;border-radius:var(--r3);font-size:14px;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all var(--trans)}
+.hero-btn-main{background:#fff;color:var(--primary)}
+.hero-btn-main:hover{background:var(--primary-soft);transform:translateY(-1px)}
+.hero-btn-out{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.hero-btn-out:hover{background:rgba(255,255,255,.25)}
+.hero-stats{display:flex;gap:32px;margin-top:28px;padding-top:22px;border-top:1px solid rgba(255,255,255,.2)}
+.hero-stat{text-align:center}
+.hero-stat strong{display:block;font-size:24px;font-weight:700}
+.hero-stat small{font-size:11.5px;opacity:.7}
+.category-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin-bottom:28px}
+.cat-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:18px 10px;text-align:center;cursor:pointer;transition:all var(--trans)}
+.cat-card:hover{border-color:var(--primary);background:var(--primary-soft);transform:translateY(-2px)}
+.cat-card:hover .cat-icon{background:var(--primary);color:#fff}
+.cat-icon{width:46px;height:46px;border-radius:12px;background:var(--surface2);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:22px;transition:all var(--trans)}
+.cat-card p{font-size:11.5px;font-weight:600;color:var(--text2)}
+.creative-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;transition:all var(--trans)}
+.creative-card:hover{box-shadow:0 8px 32px var(--shadow);transform:translateY(-3px)}
+.cc-cover{height:100px;background:linear-gradient(135deg,var(--bg2),var(--primary-soft));position:relative}
+.cc-cover img{width:100%;height:100%;object-fit:cover}
+.cc-body{padding:14px}
+.cc-avatar{width:52px;height:52px;border-radius:50%;border:3px solid var(--surface);margin-top:-30px;margin-bottom:8px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px}
+.cc-name{font-size:14px;font-weight:700;margin-bottom:2px}
+.cc-role{font-size:12px;color:var(--text3);margin-bottom:8px}
+.cc-meta{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text3);margin-bottom:10px}
+.cc-meta span{font-size:14px}
+.cc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.cc-actions{display:flex;gap:8px}
+/* ── DISCOVER ── */
+.discover-layout{display:flex;gap:20px}
+.filter-sidebar{width:240px;flex-shrink:0}
+.filter-group{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:16px;margin-bottom:14px}
+.filter-group h4{font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text)}
+.filter-option{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;font-size:12.5px;color:var(--text2);border-radius:6px}
+.filter-option input[type=checkbox]{accent-color:var(--primary)}
+.discover-results{flex:1}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.results-count{font-size:13px;color:var(--text3)}
+.sort-select{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:6px 12px;font-size:13px;color:var(--text);outline:none;cursor:pointer;font-family:inherit}
+.pro-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:16px;display:flex;gap:14px;transition:all var(--trans);margin-bottom:12px}
+.pro-card:hover{box-shadow:0 4px 20px var(--shadow2);border-color:var(--primary-mid)}
+.pro-av{width:60px;height:60px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:700}
+.pro-info{flex:1;min-width:0}
+.pro-name{font-size:15px;font-weight:700;margin-bottom:2px}
+.pro-title{font-size:12.5px;color:var(--text3);margin-bottom:6px}
+.pro-rating{display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:8px}
+.pro-skills{display:flex;flex-wrap:wrap;gap:5px}
+.pro-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
+.pro-price{font-size:14px;font-weight:700;color:var(--primary)}
+.pro-price small{font-size:10px;color:var(--text3);font-weight:400}
+/* ── PROFILE ── */
+.profile-cover{height:220px;background:linear-gradient(135deg,var(--primary-d),var(--primary),var(--accent));border-radius:var(--r);overflow:hidden;position:relative;margin-bottom:0}
+.profile-hero{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:20px;margin-bottom:18px;position:relative}
+.profile-av{width:90px;height:90px;border-radius:50%;border:4px solid var(--surface);margin-top:-55px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:30px;font-weight:700;background:linear-gradient(135deg,var(--primary),var(--accent))}
+.profile-actions{position:absolute;top:16px;right:16px;display:flex;gap:8px}
+.profile-name{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin:10px 0 4px}
+.profile-role{font-size:14px;color:var(--text3);margin-bottom:12px}
+.profile-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--text2);margin-bottom:14px}
+.profile-meta span{display:flex;align-items:center;gap:5px}
+.profile-tabs{display:flex;gap:4px;border-bottom:1px solid var(--border2);margin-bottom:20px}
+.tab-btn{padding:9px 18px;font-size:13.5px;font-weight:600;color:var(--text3);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all var(--trans);font-family:inherit}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary)}
+.tab-btn:hover:not(.active){color:var(--text2)}
+.portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.port-item{border-radius:var(--r2);overflow:hidden;aspect-ratio:4/3;background:var(--surface2);cursor:pointer;position:relative}
+.port-item:hover .port-overlay{opacity:1}
+.port-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(122,28,46,.8),transparent);display:flex;align-items:flex-end;padding:12px;opacity:0;transition:opacity var(--trans)}
+.port-overlay p{color:#fff;font-size:12px;font-weight:600}
+.port-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px}
+/* ── ACADEMY ── */
+.course-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;transition:all var(--trans)}
+.course-card:hover{box-shadow:0 8px 28px var(--shadow);transform:translateY(-2px)}
+.course-thumb{height:130px;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
+.course-badge{position:absolute;top:10px;right:10px}
+.course-body{padding:14px}
+.course-title{font-size:14px;font-weight:700;margin-bottom:4px;line-height:1.4}
+.course-instructor{font-size:11.5px;color:var(--text3);margin-bottom:8px}
+.course-meta{display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--text3);margin-bottom:10px}
+.course-price{font-size:15px;font-weight:700;color:var(--primary)}
+.course-price .free{color:#1A6B3A}
+/* ── FEED ── */
+.feed-layout{display:grid;grid-template-columns:1fr 300px;gap:20px}
+.feed-post{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:18px;margin-bottom:14px}
+.post-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.post-av{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px}
+.post-author{font-weight:700;font-size:14px}
+.post-meta{font-size:11.5px;color:var(--text3)}
+.post-media{border-radius:var(--r2);overflow:hidden;margin-bottom:14px;background:var(--surface2);min-height:180px;display:flex;align-items:center;justify-content:center;font-size:64px}
+.post-text{font-size:13.5px;color:var(--text2);line-height:1.65;margin-bottom:14px}
+.post-actions{display:flex;gap:6px}
+.post-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--r2);border:none;background:transparent;color:var(--text3);font-size:12.5px;cursor:pointer;font-family:inherit;transition:all var(--trans)}
+.post-btn:hover{background:var(--primary-soft);color:var(--primary)}
+.post-btn span.icon{font-size:18px}
+/* ── MESSAGES ── */
+.msg-layout{display:flex;height:100%;gap:0;background:var(--surface);border-radius:var(--r);border:1px solid var(--border2);overflow:hidden}
+.msg-list{width:280px;border-right:1px solid var(--border2);overflow-y:auto}
+.msg-list-header{padding:14px 16px;border-bottom:1px solid var(--border2);font-weight:700;font-size:14px}
+.msg-item{display:flex;gap:10px;padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--border2);transition:background var(--trans)}
+.msg-item:hover,.msg-item.active{background:var(--primary-soft)}
+.msg-item.active .msg-preview{color:var(--primary)}
+.msg-av{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px}
+.msg-info{flex:1;min-width:0}
+.msg-name{font-size:13px;font-weight:700;margin-bottom:1px}
+.msg-preview{font-size:11.5px;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.msg-time{font-size:10.5px;color:var(--text3)}
+.msg-chat{flex:1;display:flex;flex-direction:column}
+.chat-header{padding:14px 18px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:12px}
+.chat-body{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+.bubble{max-width:72%;padding:10px 14px;border-radius:18px;font-size:13.5px;line-height:1.5}
+.bubble-in{background:var(--surface2);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}
+.bubble-out{background:var(--primary);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-input{padding:14px 18px;border-top:1px solid var(--border2);display:flex;gap:10px;align-items:center}
+.chat-input input{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3);padding:10px 16px;font-size:13.5px;font-family:inherit;outline:none;color:var(--text)}
+.chat-input input:focus{border-color:var(--primary)}
+/* ── PROJECTS / OPPS ── */
+.project-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:18px;margin-bottom:12px;transition:all var(--trans)}
+.project-card:hover{box-shadow:0 4px 20px var(--shadow2);border-color:var(--primary-mid)}
+.project-title{font-size:15px;font-weight:700;margin-bottom:6px}
+.project-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px}
+.project-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--text3);margin-bottom:12px}
+.project-meta span{display:flex;align-items:center;gap:4px}
+.project-meta .icon{font-size:15px}
+.project-footer{display:flex;align-items:center;justify-content:space-between}
+/* ── NOTIFICATIONS ── */
+.notif-item{display:flex;gap:12px;padding:14px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);margin-bottom:10px;transition:all var(--trans)}
+.notif-item:hover{border-color:var(--primary-mid)}
+.notif-item.unread{border-left:3px solid var(--primary)}
+.notif-icon{width:42px;height:42px;border-radius:50%;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;color:var(--primary);flex-shrink:0}
+.notif-icon span{font-size:20px}
+.notif-body{flex:1}
+.notif-title{font-size:13.5px;font-weight:600;margin-bottom:3px}
+.notif-sub{font-size:12px;color:var(--text3)}
+.notif-time{font-size:11px;color:var(--text3);flex-shrink:0}
+/* ── ADMIN ── */
+.stat-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:20px;display:flex;align-items:center;gap:14px}
+.stat-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-icon span{font-size:24px}
+.stat-val{font-size:26px;font-weight:800;line-height:1;margin-bottom:2px}
+.stat-lbl{font-size:12px;color:var(--text3)}
+.stat-chg{font-size:11px;font-weight:600;margin-top:4px}
+.chg-up{color:#1A8A3A}
+.chg-dn{color:#C03030}
+.admin-table{width:100%;border-collapse:collapse;font-size:13px}
+.admin-table th{text-align:left;padding:10px 14px;background:var(--bg2);color:var(--text2);font-size:11.5px;font-weight:700;border-bottom:1px solid var(--border)}
+.admin-table td{padding:11px 14px;border-bottom:1px solid var(--border2);color:var(--text2)}
+.admin-table tr:hover td{background:var(--primary-soft)}
+/* ── DARK MODE TOGGLE ── */
+.dark-toggle{width:48px;height:26px;background:var(--bg2);border-radius:13px;border:1px solid var(--border);cursor:pointer;position:relative;transition:background var(--trans);flex-shrink:0}
+.dark-toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--primary);transition:transform var(--trans)}
+[data-theme=dark] .dark-toggle{background:var(--primary)}
+[data-theme=dark] .dark-toggle::after{transform:translateX(22px);background:#fff}
+/* ── COLLAB / OPPORTUNITY ── */
+.opp-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:18px;transition:all var(--trans);cursor:pointer}
+.opp-card:hover{box-shadow:0 6px 24px var(--shadow);transform:translateY(-2px);border-color:var(--primary-mid)}
+.opp-head{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
+.opp-logo{width:44px;height:44px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--surface2)}
+.opp-title{font-size:14px;font-weight:700;margin-bottom:2px}
+.opp-company{font-size:12px;color:var(--text3)}
+/* ── SUBSCRIPTION ── */
+.plan-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--r3);padding:28px;text-align:center;transition:all var(--trans);position:relative}
+.plan-card.featured{border-color:var(--primary);box-shadow:0 8px 32px var(--shadow)}
+.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;padding:4px 16px;border-radius:12px;font-size:11.5px;font-weight:700}
+.plan-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:8px}
+.plan-price{font-size:36px;font-weight:800;color:var(--primary);line-height:1;margin-bottom:4px}
+.plan-price sup{font-size:18px}
+.plan-price sub{font-size:13px;color:var(--text3)}
+.plan-features{text-align:left;margin:20px 0;display:flex;flex-direction:column;gap:8px}
+.plan-feature{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2)}
+.plan-feature span{font-size:18px;color:var(--primary)}
+/* ── EMPTY/LOADING ── */
+.empty-state{text-align:center;padding:48px 20px;color:var(--text3)}
+.empty-state .icon{font-size:56px;display:block;margin-bottom:12px;opacity:.4}
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){.category-grid{grid-template-columns:repeat(4,1fr)}.grid-4{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:860px){.sidebar{position:fixed;left:0;top:0;height:100vh;z-index:200;box-shadow:4px 0 24px var(--shadow)}.sidebar:not(.collapsed){box-shadow:4px 0 40px var(--shadow)}.discover-layout{flex-direction:column}.filter-sidebar{width:100%}.feed-layout{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr 1fr}.msg-layout{flex-direction:column}.msg-list{width:100%;max-height:200px}}
+@media(max-width:600px){.hero{padding:28px 22px}.hero h1{font-size:28px}.category-grid{grid-template-columns:repeat(3,1fr)}.grid-3,.grid-2{grid-template-columns:1fr}.grid-4{grid-template-columns:1fr 1fr}.portfolio-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- ─────────────── SIDEBAR ─────────────── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <div class="logo-mark"><span class="material-symbols-rounded">flight_takeoff</span></div>
+    <span class="logo-text">FALCON</span>
+  </div>
+  <div class="sb-toggle" onclick="toggleSidebar()">
+    <span class="material-symbols-rounded">chevron_left</span>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">MAIN</div>
+    <div class="sb-item active" data-page="home">
+      <span class="material-symbols-rounded icon">cottage</span>
+      <span class="label">Home</span>
+    </div>
+    <div class="sb-item" data-page="discover">
+      <span class="material-symbols-rounded icon">explore</span>
+      <span class="label">Discover</span>
+    </div>
+    <div class="sb-item" data-page="feed">
+      <span class="material-symbols-rounded icon">dynamic_feed</span>
+      <span class="label">Creative Feed</span>
+    </div>
+    <div class="sb-section">WORK</div>
+    <div class="sb-item" data-page="projects">
+      <span class="material-symbols-rounded icon">work</span>
+      <span class="label">Projects</span>
+      <span class="sb-badge">3</span>
+    </div>
+    <div class="sb-item" data-page="opportunities">
+      <span class="material-symbols-rounded icon">lightbulb</span>
+      <span class="label">Opportunities</span>
+    </div>
+    <div class="sb-item" data-page="collaborate">
+      <span class="material-symbols-rounded icon">group_add</span>
+      <span class="label">Collaborate</span>
+    </div>
+    <div class="sb-section">CONNECT</div>
+    <div class="sb-item" data-page="messages">
+      <span class="material-symbols-rounded icon">chat_bubble</span>
+      <span class="label">Messages</span>
+      <span class="sb-badge">5</span>
+    </div>
+    <div class="sb-item" data-page="notifications">
+      <span class="material-symbols-rounded icon">notifications</span>
+      <span class="label">Notifications</span>
+      <span class="sb-badge">9</span>
+    </div>
+    <div class="sb-section">GROW</div>
+    <div class="sb-item" data-page="academy">
+      <span class="material-symbols-rounded icon">school</span>
+      <span class="label">Falcon Academy</span>
+    </div>
+    <div class="sb-item" data-page="subscription">
+      <span class="material-symbols-rounded icon">stars</span>
+      <span class="label">Subscription</span>
+    </div>
+    <div class="sb-section">MY ACCOUNT</div>
+    <div class="sb-item" data-page="profile">
+      <span class="material-symbols-rounded icon">person</span>
+      <span class="label">My Profile</span>
+    </div>
+    <div class="sb-item" data-page="admin">
+      <span class="material-symbols-rounded icon">admin_panel_settings</span>
+      <span class="label">Admin Dashboard</span>
+    </div>
+  </nav>
+  <div class="sb-bottom">
+    <div class="sb-user" data-page="profile">
+      <div class="sb-avatar">AK</div>
+      <div class="user-info">
+        <div class="user-name">Alex Kumar</div>
+        <div class="user-role">Music Producer · Pro</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ─────────────── MAIN ─────────────── -->
+<div class="main">
+  <header class="topbar">
+    <div class="page-title" id="topbar-title">Home</div>
+    <div class="search-wrap">
+      <span class="material-symbols-rounded search-icon">search</span>
+      <input type="text" placeholder="Search creatives, services, courses…" id="search-input"/>
+    </div>
+    <div class="topbar-actions">
+      <button class="tb-btn tb-notif" title="Notifications" onclick="nav('notifications')">
+        <span class="material-symbols-rounded">notifications</span>
+      </button>
+      <button class="tb-btn" title="Messages" onclick="nav('messages')">
+        <span class="material-symbols-rounded">chat_bubble</span>
+      </button>
+      <div class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle dark mode"></div>
+      <button class="tb-join" onclick="nav('discover')">Join Falcon</button>
+    </div>
+  </header>
+
+  <div class="content" id="content">
+
+    <!-- ══════ HOME ══════ -->
+    <div class="page active" id="page-home">
+      <div class="hero">
+        <div class="hero-eyebrow">
+          <span class="material-symbols-rounded" style="font-size:16px">flight_takeoff</span>
+          <span>The Creative Industry Platform</span>
+        </div>
+        <h1>Where <em>Creativity</em><br>Takes Flight.</h1>
+        <p>Discover world-class creative talent. Showcase your portfolio. Build your reputation. Learn from the best.</p>
+        <div class="hero-actions">
+          <button class="hero-btn hero-btn-main" onclick="nav('discover')">Find Creative Talent</button>
+          <button class="hero-btn hero-btn-out" onclick="nav('profile')">Showcase Your Work</button>
+          <button class="hero-btn hero-btn-out" onclick="nav('academy')">Explore Academy</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>48,200+</strong><small>Creative Professionals</small></div>
+          <div class="hero-stat"><strong>12,800+</strong><small>Projects Completed</small></div>
+          <div class="hero-stat"><strong>6,400+</strong><small>Businesses</small></div>
+          <div class="hero-stat"><strong>340+</strong><small>Courses</small></div>
+        </div>
+      </div>
+
+      <div class="row-header"><h2 class="section-title">Explore Creative Categories</h2><button class="see-all" onclick="nav('discover')">Browse All</button></div>
+      <div class="category-grid">
+        <div class="cat-card" onclick="nav('discover')"><div class="cat-icon"><span class="material-symbols-rounded">palette</span></div><p>Design</p></div>
+        <div class="cat-card" onclick="nav('discover')"><div class="cat-icon"><span class="material-symbols-rounded">music_note</span></div><p>Music</p></div>
+        <div class="cat-card" onclick="nav('discover')"><div class="cat-icon"><span class="material-symbols-rounded">videocam</span></div><p>Film & Video</p></div>
+        <div class="cat-card" onclick="nav('discover')"><div class="cat-icon"><span class="material-symbols-rounded">camera_alt</span></div><p>Photography</p></div>
+        <div class="cat-card" onclick="nav('discover')"><div class="cat-icon"><span class="material-symbols-rounded">code</span></div><p>Web & Digital</p></div>
+        <div class="cat-card" onclick="nav('discover')"><div class="cat-icon"><span class="material-symbols-rounded">edit_note</span></div><p>Writing</p></div>
+        <div class="cat-card" onclick="nav('discover')"><div class="cat-icon"><span class="material-symbols-rounded">brush</span></div><p>Illustration</p></div>
+      </div>
+
+      <div class="row-header" style="margin-top:4px"><h2 class="section-title">Featured Creatives</h2><button class="see-all" onclick="nav('discover')">View All</button></div>
+      <div class="grid-4" id="featured-creatives"></div>
+
+      <div style="margin-top:28px">
+        <div class="row-header"><h2 class="section-title">Trending Services</h2><button class="see-all" onclick="nav('discover')">Explore</button></div>
+        <div class="grid-4" id="trending-services"></div>
+      </div>
+
+      <div style="margin-top:28px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:28px;text-align:center">
+        <h2 class="section-title" style="text-align:center;margin-bottom:6px">How Falcon Works</h2>
+        <p class="section-sub" style="text-align:center;margin-bottom:24px">From discovery to collaboration in five simple steps.</p>
+        <div style="display:flex;justify-content:center;gap:0;flex-wrap:wrap" id="how-it-works"></div>
+      </div>
+    </div>
+
+    <!-- ══════ DISCOVER ══════ -->
+    <div class="page" id="page-discover">
+      <div class="row-header"><h2 class="section-title">Discover Creatives</h2></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px" id="filter-pills"></div>
+      <div class="discover-layout">
+        <aside class="filter-sidebar">
+          <div class="filter-group">
+            <h4>Category</h4>
+            <label class="filter-option"><input type="checkbox" checked> Graphic Design</label>
+            <label class="filter-option"><input type="checkbox"> Music Production</label>
+            <label class="filter-option"><input type="checkbox"> Photography</label>
+            <label class="filter-option"><input type="checkbox"> Video Editing</label>
+            <label class="filter-option"><input type="checkbox"> Web Development</label>
+            <label class="filter-option"><input type="checkbox"> Illustration</label>
+            <label class="filter-option"><input type="checkbox"> Songwriting</label>
+          </div>
+          <div class="filter-group">
+            <h4>Rating</h4>
+            <label class="filter-option"><input type="checkbox"> ★★★★★ 5 Star</label>
+            <label class="filter-option"><input type="checkbox" checked> ★★★★ 4+ Stars</label>
+            <label class="filter-option"><input type="checkbox"> ★★★ 3+ Stars</label>
+          </div>
+          <div class="filter-group">
+            <h4>Location</h4>
+            <label class="filter-option"><input type="checkbox"> Remote</label>
+            <label class="filter-option"><input type="checkbox"> Mumbai</label>
+            <label class="filter-option"><input type="checkbox"> Delhi</label>
+            <label class="filter-option"><input type="checkbox"> Hyderabad</label>
+            <label class="filter-option"><input type="checkbox"> Bangalore</label>
+          </div>
+          <div class="filter-group">
+            <h4>Budget</h4>
+            <label class="filter-option"><input type="checkbox"> Under ₹5,000</label>
+            <label class="filter-option"><input type="checkbox" checked> ₹5K – ₹20K</label>
+            <label class="filter-option"><input type="checkbox"> ₹20K – ₹50K</label>
+            <label class="filter-option"><input type="checkbox"> ₹50K+</label>
+          </div>
+          <div class="filter-group">
+            <h4>Experience</h4>
+            <label class="filter-option"><input type="checkbox"> 0–2 years</label>
+            <label class="filter-option"><input type="checkbox" checked> 2–5 years</label>
+            <label class="filter-option"><input type="checkbox"> 5–10 years</label>
+            <label class="filter-option"><input type="checkbox"> 10+ years</label>
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center">
+            <span class="material-symbols-rounded">filter_list</span> Apply Filters
+          </button>
+        </aside>
+        <div class="discover-results">
+          <div class="results-header">
+            <span class="results-count">Showing <strong>284</strong> professionals</span>
+            <select class="sort-select">
+              <option>Sort: Best Match</option>
+              <option>Highest Rated</option>
+              <option>Most Reviews</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+            </select>
+          </div>
+          <div id="discover-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ PROFILE ══════ -->
+    <div class="page" id="page-profile">
+      <div class="profile-cover" style="background:linear-gradient(135deg,#5A1220,#7A1C2E,#C09060)"></div>
+      <div class="profile-hero">
+        <div class="profile-actions">
+          <button class="btn btn-outline"><span class="material-symbols-rounded">share</span> Share</button>
+          <button class="btn btn-primary"><span class="material-symbols-rounded">chat_bubble</span> Message</button>
+          <button class="btn btn-primary" style="background:var(--accent)"><span class="material-symbols-rounded">handshake</span> Hire</button>
+        </div>
+        <div class="profile-av">AK</div>
+        <h2 class="profile-name">Alex Kumar</h2>
+        <p class="profile-role">Music Producer · Beat Maker · Sound Designer</p>
+        <div class="profile-meta">
+          <span><span class="material-symbols-rounded" style="font-size:16px">location_on</span> Mumbai, Maharashtra</span>
+          <span><span class="material-symbols-rounded" style="font-size:16px">star</span> <strong>4.9</strong> (312 reviews)</span>
+          <span><span class="material-symbols-rounded" style="font-size:16px">work_history</span> 7 years experience</span>
+          <span><span class="material-symbols-rounded" style="font-size:16px">task_alt</span> 184 projects</span>
+          <span class="badge badge-gold"><span class="material-symbols-rounded" style="font-size:13px">verified</span> Top Creative</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+          <span class="pill active">Music Production</span><span class="pill">Beat Making</span><span class="pill">FL Studio</span><span class="pill">Ableton</span><span class="pill">Hip-Hop</span><span class="pill">Trap</span><span class="pill">R&amp;B</span>
+        </div>
+        <p style="font-size:13.5px;color:var(--text2);max-width:680px;line-height:1.7">Award-winning music producer with 7+ years crafting hits for Bollywood, independent artists, and international labels. Specialising in Hip-Hop, Trap, R&B, and cinematic scores. My beats have been licensed on 200+ tracks globally.</p>
+      </div>
+      <div class="profile-tabs" id="profile-tabs">
+        <button class="tab-btn active" data-tab="portfolio">Portfolio</button>
+        <button class="tab-btn" data-tab="services">Services</button>
+        <button class="tab-btn" data-tab="reviews">Reviews</button>
+        <button class="tab-btn" data-tab="about">About</button>
+      </div>
+      <div id="profile-tab-content"></div>
+    </div>
+
+    <!-- ══════ FEED ══════ -->
+    <div class="page" id="page-feed">
+      <div class="feed-layout">
+        <div>
+          <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:14px;display:flex;gap:10px;align-items:center">
+            <div class="sb-avatar" style="width:38px;height:38px;flex-shrink:0">AK</div>
+            <input type="text" placeholder="Share your creative work…" style="flex:1;border:1px solid var(--border);border-radius:var(--r3);padding:9px 16px;font-family:inherit;font-size:13.5px;outline:none;background:var(--bg2);color:var(--text)">
+            <button class="btn btn-primary" style="flex-shrink:0"><span class="material-symbols-rounded">add_photo_alternate</span></button>
+          </div>
+          <div id="feed-posts"></div>
+        </div>
+        <aside>
+          <div class="card" style="padding:16px;margin-bottom:14px">
+            <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">Trending Tags</h4>
+            <div style="display:flex;flex-wrap:wrap;gap:6px" id="trending-tags"></div>
+          </div>
+          <div class="card" style="padding:16px">
+            <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">Who to Follow</h4>
+            <div id="who-to-follow"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- ══════ MESSAGES ══════ -->
+    <div class="page" id="page-messages">
+      <div class="msg-layout" style="height:calc(100vh - 130px)">
+        <div class="msg-list">
+          <div class="msg-list-header">Messages <span class="sb-badge" style="margin-left:8px">5</span></div>
+          <div id="msg-list-items"></div>
+        </div>
+        <div class="msg-chat">
+          <div class="chat-header">
+            <div class="msg-av" style="background:linear-gradient(135deg,#7A1C2E,#C09060)">SR</div>
+            <div><div style="font-weight:700;font-size:14px">Sanjana Rao</div><div style="font-size:11.5px;color:#1A8A3A">● Online</div></div>
+            <div style="margin-left:auto;display:flex;gap:8px">
+              <button class="tb-btn"><span class="material-symbols-rounded">call</span></button>
+              <button class="tb-btn"><span class="material-symbols-rounded">more_vert</span></button>
+            </div>
+          </div>
+          <div class="chat-body">
+            <div class="bubble bubble-in">Hi! I saw your music portfolio — absolutely love your hip-hop beats. Are you available for a project?</div>
+            <div class="bubble bubble-out">Hey Sanjana! Thanks so much 🙏 Yes, I'm available. What kind of project are you working on?</div>
+            <div class="bubble bubble-in">I'm launching an indie R&B EP next month — need 5 original beats. My budget is ₹40,000. Does that work?</div>
+            <div class="bubble bubble-out">That sounds like a great project! ₹40K for 5 beats works for me. Can you share any reference tracks you have in mind?</div>
+            <div class="bubble bubble-in">Sure! I'll send over some references. Can we do a quick call tomorrow to discuss the vibe and arrangement?</div>
+          </div>
+          <div class="chat-input">
+            <button class="tb-btn"><span class="material-symbols-rounded">attach_file</span></button>
+            <input type="text" placeholder="Type a message…"/>
+            <button class="btn btn-primary" style="padding:8px 16px"><span class="material-symbols-rounded">send</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ PROJECTS ══════ -->
+    <div class="page" id="page-projects">
+      <div class="row-header">
+        <h2 class="section-title">Projects</h2>
+        <button class="btn btn-primary"><span class="material-symbols-rounded">add</span> New Project</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:18px">
+        <button class="pill active">All Projects</button>
+        <button class="pill">Active</button>
+        <button class="pill">Proposals</button>
+        <button class="pill">Completed</button>
+        <button class="pill">Drafts</button>
+      </div>
+      <div id="projects-list"></div>
+    </div>
+
+    <!-- ══════ OPPORTUNITIES ══════ -->
+    <div class="page" id="page-opportunities">
+      <div class="row-header">
+        <h2 class="section-title">Opportunities</h2>
+        <button class="btn btn-primary"><span class="material-symbols-rounded">post_add</span> Post Opportunity</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:18px">
+        <button class="pill active">All</button>
+        <button class="pill">Freelance</button>
+        <button class="pill">Full-time</button>
+        <button class="pill">Government</button>
+        <button class="pill">Internships</button>
+        <button class="pill">Collaborations</button>
+      </div>
+      <div class="grid-3" id="opportunities-list"></div>
+    </div>
+
+    <!-- ══════ COLLABORATE ══════ -->
+    <div class="page" id="page-collaborate">
+      <div class="row-header">
+        <h2 class="section-title">Collaborate</h2>
+        <button class="btn btn-primary"><span class="material-symbols-rounded">group_add</span> Post Collab Request</button>
+      </div>
+      <p class="section-sub">Find other creatives to collaborate with on exciting projects.</p>
+      <div class="grid-3" id="collab-list"></div>
+    </div>
+
+    <!-- ══════ ACADEMY ══════ -->
+    <div class="page" id="page-academy">
+      <div style="background:linear-gradient(135deg,var(--primary-d),var(--primary));border-radius:var(--r);padding:32px;color:#fff;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:12px;font-weight:700;opacity:.7;letter-spacing:.06em;margin-bottom:8px">FALCON ACADEMY</div>
+          <h2 style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;margin-bottom:10px">Learn from Industry Experts</h2>
+          <p style="opacity:.85;max-width:480px;line-height:1.65;margin-bottom:20px">Master creative skills with structured courses, expert tutorials, and real-world projects.</p>
+          <button class="hero-btn hero-btn-main">Explore All Courses</button>
+        </div>
+        <div style="font-size:100px;opacity:.2">🎓</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+        <button class="pill active">All Courses</button>
+        <button class="pill">Design</button>
+        <button class="pill">Music Production</button>
+        <button class="pill">Photography</button>
+        <button class="pill">Film & Video</button>
+        <button class="pill">Web Dev</button>
+        <button class="pill">Songwriting</button>
+      </div>
+      <div class="row-header"><h2 class="section-title">Popular Courses</h2></div>
+      <div class="grid-4" id="courses-grid"></div>
+    </div>
+
+    <!-- ══════ NOTIFICATIONS ══════ -->
+    <div class="page" id="page-notifications">
+      <div class="row-header">
+        <h2 class="section-title">Notifications</h2>
+        <button class="btn btn-ghost" style="font-size:12px">Mark all read</button>
+      </div>
+      <div id="notifications-list"></div>
+    </div>
+
+    <!-- ══════ SUBSCRIPTION ══════ -->
+    <div class="page" id="page-subscription">
+      <div style="text-align:center;margin-bottom:28px">
+        <h2 class="section-title" style="text-align:center;margin-bottom:8px">Choose Your Falcon Plan</h2>
+        <p class="section-sub" style="text-align:center">Unlock premium features and take your creative career to the next level.</p>
+      </div>
+      <div class="grid-3" id="plans-grid"></div>
+    </div>
+
+    <!-- ══════ ADMIN ══════ -->
+    <div class="page" id="page-admin">
+      <div class="row-header"><h2 class="section-title">Admin Dashboard</h2><span class="badge badge-primary">Admin Access</span></div>
+      <div class="grid-4" style="margin-bottom:24px" id="admin-stats"></div>
+      <div class="grid-2">
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:18px;overflow:auto">
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:14px">Recent User Registrations</h4>
+          <table class="admin-table" id="admin-users-table"></table>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:18px">
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:14px">Revenue by Source</h4>
+          <div id="revenue-bars"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+// ─── NAV ────────────────────────────────────────────────────────────────────
+const titles={home:'Home',discover:'Discover Creatives',profile:'My Profile',feed:'Creative Feed',messages:'Messages',projects:'Projects',opportunities:'Opportunities',collaborate:'Collaborate',academy:'Falcon Academy',notifications:'Notifications',subscription:'Subscription',admin:'Admin Dashboard'};
+function nav(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  const pg=document.getElementById('page-'+id);
+  if(pg)pg.classList.add('active');
+  const si=document.querySelector(`.sb-item[data-page="${id}"]`);
+  if(si)si.classList.add('active');
+  document.getElementById('topbar-title').textContent=titles[id]||id;
+  document.getElementById('content').scrollTop=0;
+}
+document.querySelectorAll('.sb-item').forEach(i=>i.addEventListener('click',()=>nav(i.dataset.page)));
+
+// ─── SIDEBAR TOGGLE ─────────────────────────────────────────────────────────
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('collapsed')}
+
+// ─── DARK MODE ───────────────────────────────────────────────────────────────
+function toggleDark(){document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'}
+
+// ─── SAMPLE DATA ─────────────────────────────────────────────────────────────
+const creatives=[
+  {initials:'AK',name:'Alex Kumar',role:'Music Producer',rating:'4.9',reviews:312,location:'Mumbai',price:'₹8,000',skills:['Hip-Hop','FL Studio','Trap'],bg:'#7A1C2E,#C09060',avail:true},
+  {initials:'SR',name:'Sanjana Rao',role:'Graphic Designer',rating:'4.8',reviews:189,location:'Bangalore',price:'₹5,500',skills:['Branding','Illustrator','Figma'],bg:'#1A3A6B,#4A8AC4',avail:true},
+  {initials:'PR',name:'Priya Reddy',role:'Photographer',rating:'4.9',reviews:241,location:'Hyderabad',price:'₹12,000',skills:['Portraits','Fashion','Lightroom'],bg:'#1A6B3A,#4AC480',avail:false},
+  {initials:'VN',name:'Vivek Nair',role:'Film Director',rating:'4.7',reviews:97,location:'Chennai',price:'₹25,000',skills:['Cinematography','DaVinci','FCP'],bg:'#4A1A6B,#8A4AC4',avail:true},
+  {initials:'ME',name:'Meera Iyer',role:'UI/UX Designer',rating:'5.0',reviews:64,location:'Remote',price:'₹9,000',skills:['Figma','Prototyping','React'],bg:'#6B3A1A,#C47A4A',avail:true},
+  {initials:'RK',name:'Rahul Khan',role:'Video Editor',rating:'4.6',reviews:138,location:'Delhi',price:'₹6,000',skills:['Premiere','After Effects','Color'],bg:'#1A5A6B,#4AC4C0',avail:true},
+  {initials:'DP',name:'Deepak Patel',role:'Songwriter',rating:'4.8',reviews:78,location:'Ahmedabad',price:'₹4,500',skills:['Lyrics','Melody','Hindi','English'],bg:'#3A6B1A,#80C44A',avail:false},
+  {initials:'NK',name:'Nisha Kapoor',role:'Brand Designer',rating:'4.9',reviews:203,location:'Pune',price:'₹11,000',skills:['Identity','Branding','Strategy'],bg:'#6B1A5A,#C44AAC',avail:true},
+];
+const courses=[
+  {icon:'🎹',title:'Complete FL Studio Masterclass',instructor:'Alex Kumar',lessons:48,hours:'24h',rating:'4.9',reviews:1240,price:'₹2,499',free:false,color:'#F5E6E9'},
+  {icon:'🎨',title:'Brand Identity Design from Zero',instructor:'Nisha Kapoor',lessons:36,hours:'18h',rating:'4.8',reviews:890,price:'FREE',free:true,color:'#E6EEF8'},
+  {icon:'📷',title:'Portrait Photography Masterclass',instructor:'Priya Reddy',lessons:52,hours:'28h',rating:'4.9',reviews:2100,price:'₹1,999',free:false,color:'#E6F5EC'},
+  {icon:'🎬',title:'Cinematic Storytelling & Color',instructor:'Vivek Nair',lessons:44,hours:'22h',rating:'4.7',reviews:670,price:'₹3,499',free:false,color:'#F0EAF8'},
+  {icon:'✏️',title:'Songwriting: Craft Your First Hit',instructor:'Deepak Patel',lessons:30,hours:'15h',rating:'4.8',reviews:520,price:'₹1,499',free:false,color:'#FBF3E0'},
+  {icon:'🖥️',title:'UI/UX Design with Figma 2025',instructor:'Meera Iyer',lessons:60,hours:'32h',rating:'5.0',reviews:3200,price:'FREE',free:true,color:'#F5E6E9'},
+  {icon:'🎧',title:'Music Mixing & Mastering Pro',instructor:'Alex Kumar',lessons:40,hours:'20h',rating:'4.9',reviews:1580,price:'₹2,999',free:false,color:'#E6EEF8'},
+  {icon:'🌐',title:'Modern Web Dev for Creatives',instructor:'Meera Iyer',lessons:54,hours:'27h',rating:'4.8',reviews:980,price:'₹1,999',free:false,color:'#E6F5EC'},
+];
+const posts=[
+  {av:'AK',name:'Alex Kumar',role:'Music Producer',time:'2 hours ago',emoji:'🎵',text:'Just dropped a brand new trap beat pack — 10 exclusive loops, 808s, and full stems. Took 3 weeks to produce every sound from scratch. Available for licensing and custom beats! 🔥',likes:284,comments:42,shares:18,avbg:'#7A1C2E,#C09060'},
+  {av:'SR',name:'Sanjana Rao',role:'Graphic Designer',time:'4 hours ago',emoji:'🎨',text:'Completed a full brand identity for a Bangalore startup — logo, colours, typography, stationery. Really happy with how the minimalist direction turned out. What do you think?',likes:195,comments:31,shares:12,avbg:'#1A3A6B,#4A8AC4'},
+  {av:'PR',name:'Priya Reddy',role:'Photographer',time:'6 hours ago',emoji:'📸',text:'Behind the scenes from yesterday\'s editorial shoot at Charminar, Hyderabad. Golden hour magic 🌅 Shot on Sony A7 IV with a vintage 85mm f/1.4.',likes:412,comments:58,shares:34,avbg:'#1A6B3A,#4AC480'},
+];
+const notifications=[
+  {icon:'star',title:'New 5-star review from Sanjana Rao',sub:'"Incredible music production, delivered ahead of schedule!" — on EP Production project',time:'Just now',unread:true},
+  {icon:'work',title:'New project request from TechVibe Studios',sub:'Logo Design + Motion Graphics · Budget: ₹35,000',time:'15 min ago',unread:true},
+  {icon:'chat_bubble',title:'Message from Vivek Nair',sub:'Hey, can we discuss the documentary project?',time:'1 hour ago',unread:true},
+  {icon:'school',title:'New lesson in FL Studio Masterclass',sub:'Module 7: Advanced Sampling Techniques',time:'3 hours ago',unread:false},
+  {icon:'payments',title:'Payment received ₹12,000',sub:'Beat Pack License — Priya Reddy',time:'Yesterday',unread:false},
+  {icon:'group_add',title:'Collaboration request from Deepak Patel',sub:'Looking for a Music Producer for R&B EP',time:'2 days ago',unread:false},
+  {icon:'verified',title:'Your profile has been verified!',sub:'You\'ve earned the Verified Creative badge',time:'3 days ago',unread:false},
+];
+const projects=[
+  {title:'YouTube Channel Branding — TechTalks India',desc:'Complete brand identity including logo, channel art, intro animation, and thumbnail templates for a tech education YouTube channel with 500K+ subscribers.',budget:'₹45,000',deadline:'25 days',status:'active',category:'Graphic Design · Motion Graphics',proposals:8},
+  {title:'Hip-Hop EP Production (5 Beats)',desc:'Original beat production for an R&B/Hip-Hop EP. Artist requires professional studio quality tracks with full stems and mixing.',budget:'₹40,000',deadline:'30 days',status:'proposal',category:'Music Production',proposals:12},
+  {title:'Product Photography — 120 SKUs',desc:'Professional product photography for an e-commerce fashion brand. Clean white background studio shoots required.',budget:'₹28,000',deadline:'15 days',status:'completed',category:'Photography',proposals:0},
+];
+const opps=[
+  {logo:'🏛️',company:'Government of Telangana',title:'Creative Director — Smart City Campaign',type:'Government',budget:'₹2,50,000',deadline:'Apply by 30 May',tags:['Brand Strategy','Campaign Design','Video Production']},
+  {logo:'🎬',company:'Red Chilli Entertainment',title:'VFX Artist — Feature Film',type:'Full-time',budget:'₹80,000/month',deadline:'Immediate Joining',tags:['After Effects','Nuke','Compositing']},
+  {logo:'🎵',company:'Sony Music India',title:'In-House Music Producer',type:'Full-time',budget:'₹60,000/month',deadline:'Apply by 15 May',tags:['Music Production','Ableton','Arrangement']},
+  {logo:'📱',company:'Zomato',title:'Motion Designer — Brand Team',type:'Full-time',budget:'₹70,000/month',deadline:'Apply by 20 May',tags:['After Effects','Motion','Branding']},
+  {logo:'🏪',company:'Meesho',title:'UI/UX Designer (Contract)',type:'Freelance',budget:'₹50,000',deadline:'6 month contract',tags:['Figma','User Research','Prototyping']},
+  {logo:'🎓',company:'BYJU\'S',title:'Graphic Design Intern',type:'Internship',budget:'₹15,000/month',deadline:'June 2025 batch',tags:['Illustrator','Canva','Social Media']},
+];
+const collabs=[
+  {initials:'DP',name:'Deepak Patel',role:'Songwriter',text:'Looking for a Music Producer for an R&B EP. I have full lyrics and melodies. Revenue split: 50/50.',tags:['R&B','Music Production','Hindi'],bg:'#3A6B1A,#80C44A'},
+  {initials:'VN',name:'Vivek Nair',role:'Film Director',text:'Seeking a Cinematographer for a short film to be submitted to IFFI 2025. Unpaid but great exposure and credits.',tags:['Short Film','Cinematography','Festival'],bg:'#4A1A6B,#8A4AC4'},
+  {initials:'ME',name:'Meera Iyer',role:'UI/UX Designer',text:'Building a design studio. Need a front-end developer to partner on web design projects. Revenue share model.',tags:['React','Freelance','Design + Dev'],bg:'#6B3A1A,#C47A4A'},
+];
+const adminStats=[
+  {icon:'group',label:'Total Users',val:'48,240',chg:'+12.4%',up:true,bg:'var(--primary-soft)',c:'var(--primary)'},
+  {icon:'palette',label:'Creatives',val:'32,180',chg:'+8.2%',up:true,bg:'#E6EEF8',c:'#1A3A6B'},
+  {icon:'store',label:'Businesses',val:'6,410',chg:'+18.7%',up:true,bg:'#E6F5EC',c:'#1A6B3A'},
+  {icon:'payments',label:'Revenue MTD',val:'₹18.4L',chg:'+24.1%',up:true,bg:'#FBF3E0',c:'#8A6010'},
+  {icon:'school',label:'Course Sales',val:'2,840',chg:'+31.5%',up:true,bg:'var(--primary-soft)',c:'var(--primary)'},
+  {icon:'task_alt',label:'Projects Active',val:'1,240',chg:'-3.2%',up:false,bg:'#F0EAF8',c:'#4A1A6B'},
+  {icon:'star',label:'Avg. Rating',val:'4.82',chg:'+0.04',up:true,bg:'#FBF3E0',c:'#8A6010'},
+  {icon:'verified',label:'Verifications',val:'318',chg:'+7 today',up:true,bg:'#E6F5EC',c:'#1A6B3A'},
+];
+const plans=[
+  {name:'Free',price:'0',period:'forever',features:['Basic profile','5 portfolio items','10 messages/month','Marketplace visibility','2 project proposals','Basic analytics'],btn:'Get Started',featured:false},
+  {name:'Pro',price:'999',period:'month',features:['Everything in Free','Unlimited portfolio','Priority visibility','Advanced analytics','Unlimited messages','20 project proposals','Custom profile URL','Featured in search'],btn:'Start Pro Trial',featured:true,badge:'Most Popular'},
+  {name:'Studio',price:'2,499',period:'month',features:['Everything in Pro','Team accounts (5 members)','Business tools','White-label proposals','Lead management','API access','Priority support','Dedicated account manager'],btn:'Contact Sales',featured:false},
+];
+
+// ─── RENDER FUNCTIONS ────────────────────────────────────────────────────────
+function renderFeaturedCreatives(){
+  const el=document.getElementById('featured-creatives');
+  if(!el)return;
+  el.innerHTML=creatives.slice(0,4).map(c=>`
+  <div class="creative-card" onclick="nav('profile')">
+    <div class="cc-cover" style="background:linear-gradient(135deg,${c.bg})"></div>
+    <div class="cc-body">
+      <div class="cc-avatar" style="background:linear-gradient(135deg,${c.bg})">${c.initials}</div>
+      <div class="cc-name">${c.name} ${c.avail?'<span style="color:#1A8A3A;font-size:10px">● Available</span>':''}</div>
+      <div class="cc-role">${c.role}</div>
+      <div class="cc-meta">
+        <span class="material-symbols-rounded">star</span>${c.rating} (${c.reviews})
+        <span class="material-symbols-rounded">location_on</span>${c.location}
+      </div>
+      <div class="cc-tags">${c.skills.map(s=>`<span class="tag">${s}</span>`).join('')}</div>
+      <div class="cc-actions">
+        <button class="btn btn-outline" style="flex:1;justify-content:center;font-size:12px;padding:7px 10px">View</button>
+        <button class="btn btn-primary" style="flex:1;justify-content:center;font-size:12px;padding:7px 10px" onclick="event.stopPropagation();nav('messages')">Contact</button>
+      </div>
+    </div>
+  </div>`).join('');
+}
+
+function renderTrendingServices(){
+  const services=[
+    {icon:'palette',name:'Logo Design',from:'₹2,500',count:'1,240+'},
+    {icon:'music_note',name:'Music Production',from:'₹5,000',count:'840+'},
+    {icon:'cut',name:'Video Editing',from:'₹3,000',count:'960+'},
+    {icon:'camera_alt',name:'Photography',from:'₹8,000',count:'720+'},
+  ];
+  const el=document.getElementById('trending-services');
+  if(!el)return;
+  el.innerHTML=services.map(s=>`
+  <div class="card" style="padding:16px;cursor:pointer" onclick="nav('discover')">
+    <div style="width:44px;height:44px;border-radius:12px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;margin-bottom:10px">
+      <span class="material-symbols-rounded" style="color:var(--primary)">${s.icon}</span>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin-bottom:2px">${s.name}</div>
+    <div style="font-size:11.5px;color:var(--text3)">From ${s.from} · ${s.count} pros</div>
+  </div>`).join('');
+}
+
+function renderHowItWorks(){
+  const steps=[
+    {icon:'person_add',title:'Create Account',desc:'Sign up as a Creative or Customer'},
+    {icon:'search',title:'Discover',desc:'Browse & filter creative talent'},
+    {icon:'chat_bubble',title:'Connect',desc:'Chat, discuss requirements'},
+    {icon:'handshake',title:'Collaborate',desc:'Start your project together'},
+    {icon:'star',title:'Review',desc:'Rate work, build reputation'},
+  ];
+  const el=document.getElementById('how-it-works');
+  if(!el)return;
+  el.innerHTML=steps.map((s,i)=>`
+  <div style="flex:1;min-width:140px;text-align:center;padding:16px;position:relative">
+    ${i<steps.length-1?`<div style="position:absolute;right:0;top:30px;color:var(--border);font-size:20px">›</div>`:''}
+    <div style="width:52px;height:52px;border-radius:50%;background:var(--primary-soft);border:2px solid var(--primary-mid);display:flex;align-items:center;justify-content:center;margin:0 auto 10px">
+      <span class="material-symbols-rounded" style="color:var(--primary)">${s.icon}</span>
+    </div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:4px">${s.title}</div>
+    <div style="font-size:11.5px;color:var(--text3)">${s.desc}</div>
+  </div>`).join('');
+}
+
+function renderDiscoverList(){
+  const el=document.getElementById('discover-list');
+  if(!el)return;
+  el.innerHTML=creatives.map(c=>`
+  <div class="pro-card" onclick="nav('profile')">
+    <div class="pro-av" style="background:linear-gradient(135deg,${c.bg})">${c.initials}</div>
+    <div class="pro-info">
+      <div class="pro-name">${c.name} ${c.avail?'<span style="background:#E6F5EC;color:#1A6B3A;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700">Available</span>':''}</div>
+      <div class="pro-title">${c.role} · ${c.location}</div>
+      <div class="pro-rating">
+        <span style="color:var(--gold)">★★★★★</span> ${c.rating} <span style="color:var(--text3)">(${c.reviews} reviews)</span>
+      </div>
+      <div class="pro-skills">${c.skills.map(s=>`<span class="tag">${s}</span>`).join('')}</div>
+    </div>
+    <div class="pro-right">
+      <div class="pro-price">From ${c.price}<br><small>per project</small></div>
+      <button class="btn btn-outline" style="font-size:12px;padding:6px 14px" onclick="event.stopPropagation();nav('profile')">View</button>
+      <button class="btn btn-primary" style="font-size:12px;padding:6px 14px" onclick="event.stopPropagation();nav('messages')">
+        <span class="material-symbols-rounded" style="font-size:15px">chat_bubble</span> Contact
+      </button>
+    </div>
+  </div>`).join('');
+}
+
+function renderFilterPills(){
+  const el=document.getElementById('filter-pills');
+  if(!el)return;
+  const tags=['All Categories','Graphic Design','Music Production','Photography','Video Editing','Web Design','Illustration','Songwriting','Motion Graphics'];
+  el.innerHTML=tags.map((t,i)=>`<span class="pill${i===0?' active':''}" onclick="this.classList.toggle('active')">${t}</span>`).join('');
+}
+
+function renderProfileTab(tab){
+  const el=document.getElementById('profile-tab-content');
+  if(!el)return;
+  if(tab==='portfolio'){
+    const items=['🎵','🎧','🎹','🎼','🔊','🎚️'];
+    el.innerHTML=`<div class="portfolio-grid">${items.map(e=>`
+    <div class="port-item">
+      <div class="port-inner">${e}</div>
+      <div class="port-overlay"><p>View Project</p></div>
+    </div>`).join('')}</div>`;
+  }else if(tab==='reviews'){
+    const reviews=[
+      {name:'Sanjana Rao',av:'SR',rating:'★★★★★',text:'Absolutely phenomenal production. Alex understood my vision immediately and delivered beyond expectations. The beats are industry-ready!',project:'R&B EP',date:'2 days ago',bg:'#1A3A6B,#4A8AC4'},
+      {name:'Vivek Nair',av:'VN',rating:'★★★★★',text:'Professional, creative, and incredibly fast. The cinematic score Alex made for my short film elevated the whole project. Will definitely work again.',project:'Short Film Score',date:'1 week ago',bg:'#4A1A6B,#8A4AC4'},
+      {name:'Meera Iyer',av:'ME',rating:'★★★★★',text:'Delivered all 5 beats in 10 days — ahead of schedule. Every track was fire. Communication was smooth throughout. Highly recommended!',project:'Hip-Hop Beat Pack',date:'2 weeks ago',bg:'#6B3A1A,#C47A4A'},
+    ];
+    el.innerHTML=reviews.map(r=>`
+    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:18px;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div class="sb-avatar" style="background:linear-gradient(135deg,${r.bg});width:38px;height:38px;font-size:13px">${r.av}</div>
+        <div><div style="font-weight:700;font-size:13.5px">${r.name}</div><div style="font-size:11px;color:var(--text3)">${r.project} · ${r.date}</div></div>
+        <div style="margin-left:auto;color:var(--gold)">${r.rating}</div>
+      </div>
+      <p style="font-size:13.5px;color:var(--text2);line-height:1.65">${r.text}</p>
+    </div>`).join('');
+  }else if(tab==='services'){
+    const svcs=[
+      {name:'Custom Beat Production',price:'₹8,000',desc:'1 original beat, full stems, commercial license',del:'5–7 days'},
+      {name:'Beat Pack (5 Beats)',price:'₹35,000',desc:'5 original beats, all formats, stems included',del:'15–20 days'},
+      {name:'Full EP Production',price:'₹80,000',desc:'5–8 songs, mixing & mastering included',del:'45–60 days'},
+    ];
+    el.innerHTML=svcs.map(s=>`
+    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:18px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px">${s.name}</div>
+        <div style="font-size:12.5px;color:var(--text3);margin-bottom:6px">${s.desc}</div>
+        <div style="font-size:12px;color:var(--text3);display:flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:14px">schedule</span> Delivery: ${s.del}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;margin-left:20px">
+        <div style="font-size:20px;font-weight:800;color:var(--primary);margin-bottom:8px">${s.price}</div>
+        <button class="btn btn-primary" style="font-size:12px;padding:7px 16px">Order Now</button>
+      </div>
+    </div>`).join('');
+  }else{
+    el.innerHTML=`<div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:20px">
+      <div class="grid-2" style="gap:16px">
+        <div>
+          <h4 style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text3)">DETAILS</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text3)">Location</span><span>Mumbai, Maharashtra</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text3)">Experience</span><span>7 years</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text3)">Languages</span><span>Hindi, English, Tamil</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text3)">Availability</span><span style="color:#1A8A3A">Available Now</span></div>
+          </div>
+        </div>
+        <div>
+          <h4 style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text3)">SOFTWARE</h4>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">${['FL Studio 21','Ableton Live 11','Pro Tools','Logic Pro','iZotope Ozone','Waves Plugins','Serum','Omnisphere'].map(s=>`<span class="pill">${s}</span>`).join('')}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+}
+
+document.getElementById('profile-tabs').addEventListener('click',e=>{
+  const btn=e.target.closest('.tab-btn');
+  if(!btn)return;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProfileTab(btn.dataset.tab);
+});
+
+function renderFeed(){
+  const el=document.getElementById('feed-posts');
+  if(!el)return;
+  el.innerHTML=posts.map(p=>`
+  <div class="feed-post">
+    <div class="post-header">
+      <div class="post-av" style="background:linear-gradient(135deg,${p.avbg})">${p.av}</div>
+      <div><div class="post-author">${p.name}</div><div class="post-meta">${p.role} · ${p.time}</div></div>
+      <button class="tb-btn" style="margin-left:auto"><span class="material-symbols-rounded">more_horiz</span></button>
+    </div>
+    <div class="post-media">${p.emoji}</div>
+    <p class="post-text">${p.text}</p>
+    <div class="post-actions">
+      <button class="post-btn" onclick="this.querySelector('span.cnt').textContent=+this.querySelector('span.cnt').textContent+1">
+        <span class="material-symbols-rounded icon">favorite_border</span><span class="cnt">${p.likes}</span>
+      </button>
+      <button class="post-btn">
+        <span class="material-symbols-rounded icon">chat_bubble_outline</span>${p.comments}
+      </button>
+      <button class="post-btn">
+        <span class="material-symbols-rounded icon">share</span>${p.shares}
+      </button>
+      <button class="post-btn" style="margin-left:auto">
+        <span class="material-symbols-rounded icon">bookmark_border</span>
+      </button>
+    </div>
+  </div>`).join('');
+
+  const tags=['#BeatMaking','#DesignInspiration','#Photography','#MusicProduction','#FilmIndia','#CreativeWork','#GraphicDesign','#HipHop'];
+  document.getElementById('trending-tags').innerHTML=tags.map(t=>`<span class="pill" style="font-size:11.5px">${t}</span>`).join('');
+
+  const wtf=document.getElementById('who-to-follow');
+  if(wtf)wtf.innerHTML=creatives.slice(0,3).map(c=>`
+  <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border2)">
+    <div class="sb-avatar" style="background:linear-gradient(135deg,${c.bg});width:34px;height:34px;font-size:12px">${c.initials}</div>
+    <div style="flex:1">
+      <div style="font-size:12.5px;font-weight:700">${c.name}</div>
+      <div style="font-size:11px;color:var(--text3)">${c.role}</div>
+    </div>
+    <button class="btn btn-outline" style="font-size:11px;padding:4px 12px">Follow</button>
+  </div>`).join('');
+}
+
+function renderMessages(){
+  const contacts=[
+    {av:'SR',name:'Sanjana Rao',preview:'Sure! I\'ll send references...', time:'2m', bg:'#1A3A6B,#4A8AC4', active:true},
+    {av:'VN',name:'Vivek Nair', preview:'Can we discuss the documentary?',time:'1h',bg:'#4A1A6B,#8A4AC4'},
+    {av:'NK',name:'Nisha Kapoor',preview:'Logo revisions are done!',time:'3h',bg:'#6B1A5A,#C44AAC'},
+    {av:'ME',name:'Meera Iyer',preview:'Project approved 🎉',time:'1d',bg:'#6B3A1A,#C47A4A'},
+    {av:'RK',name:'Rahul Khan',preview:'Sent the final edits.',time:'2d',bg:'#1A5A6B,#4AC4C0'},
+  ];
+  const el=document.getElementById('msg-list-items');
+  if(el)el.innerHTML=contacts.map(c=>`
+  <div class="msg-item${c.active?' active':''}">
+    <div class="msg-av" style="background:linear-gradient(135deg,${c.bg})">${c.av}</div>
+    <div class="msg-info">
+      <div class="msg-name">${c.name}</div>
+      <div class="msg-preview">${c.preview}</div>
+    </div>
+    <div class="msg-time">${c.time}</div>
+  </div>`).join('');
+}
+
+function renderProjects(){
+  const el=document.getElementById('projects-list');
+  if(!el)return;
+  const statusColors={active:'badge-green',proposal:'badge-blue',completed:'badge-gold'};
+  el.innerHTML=projects.map(p=>`
+  <div class="project-card">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+      <div class="project-title">${p.title}</div>
+      <span class="badge ${statusColors[p.status]||'badge-primary'}" style="flex-shrink:0;margin-left:12px">${p.status.charAt(0).toUpperCase()+p.status.slice(1)}</span>
+    </div>
+    <p class="project-desc">${p.desc}</p>
+    <div class="project-meta">
+      <span><span class="material-symbols-rounded icon">payments</span>${p.budget}</span>
+      <span><span class="material-symbols-rounded icon">schedule</span>${p.deadline}</span>
+      <span><span class="material-symbols-rounded icon">palette</span>${p.category}</span>
+      ${p.proposals?`<span><span class="material-symbols-rounded icon">people</span>${p.proposals} proposals</span>`:''}
+    </div>
+    <div class="project-footer">
+      <button class="btn btn-ghost" style="font-size:12.5px">View Details</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-outline" style="font-size:12.5px">Edit</button>
+        ${p.status==='proposal'?`<button class="btn btn-primary" style="font-size:12.5px">View Proposals</button>`:''}
+      </div>
+    </div>
+  </div>`).join('');
+}
+
+function renderOpportunities(){
+  const el=document.getElementById('opportunities-list');
+  if(!el)return;
+  el.innerHTML=opps.map(o=>`
+  <div class="opp-card">
+    <div class="opp-head">
+      <div class="opp-logo">${o.logo}</div>
+      <div>
+        <div class="opp-title">${o.title}</div>
+        <div class="opp-company">${o.company}</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">${o.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--primary)">${o.budget}</div>
+        <div style="font-size:11px;color:var(--text3)">${o.deadline}</div>
+      </div>
+      <span class="badge badge-blue">${o.type}</span>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:12px;font-size:13px">Apply Now</button>
+  </div>`).join('');
+}
+
+function renderCollab(){
+  const el=document.getElementById('collab-list');
+  if(!el)return;
+  el.innerHTML=collabs.map(c=>`
+  <div class="opp-card">
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+      <div class="sb-avatar" style="background:linear-gradient(135deg,${c.bg});width:42px;height:42px;font-size:14px">${c.initials}</div>
+      <div><div style="font-weight:700;font-size:14px">${c.name}</div><div style="font-size:12px;color:var(--text3)">${c.role}</div></div>
+    </div>
+    <p style="font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:10px">${c.text}</p>
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px">${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost" style="flex:1;justify-content:center;font-size:12px">View Profile</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center;font-size:12px">Connect</button>
+    </div>
+  </div>`).join('');
+}
+
+function renderCourses(){
+  const el=document.getElementById('courses-grid');
+  if(!el)return;
+  el.innerHTML=courses.map(c=>`
+  <div class="course-card">
+    <div class="course-thumb" style="background:${c.color}">
+      <div style="font-size:52px">${c.icon}</div>
+      ${!c.free?`<span class="course-badge badge badge-primary">Premium</span>`:`<span class="course-badge badge badge-green">Free</span>`}
+    </div>
+    <div class="course-body">
+      <div class="course-title">${c.title}</div>
+      <div class="course-instructor">by ${c.instructor}</div>
+      <div class="course-meta">
+        <span style="color:var(--gold)">★</span>${c.rating} (${c.reviews.toLocaleString()})
+        <span>·</span>${c.lessons} lessons
+        <span>·</span>${c.hours}
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div class="course-price ${c.free?'free':''}">${c.price}</div>
+        <button class="btn btn-primary" style="font-size:12px;padding:7px 14px">Enroll</button>
+      </div>
+    </div>
+  </div>`).join('');
+}
+
+function renderNotifications(){
+  const el=document.getElementById('notifications-list');
+  if(!el)return;
+  el.innerHTML=notifications.map(n=>`
+  <div class="notif-item${n.unread?' unread':''}">
+    <div class="notif-icon"><span class="material-symbols-rounded">${n.icon}</span></div>
+    <div class="notif-body">
+      <div class="notif-title">${n.title}</div>
+      <div class="notif-sub">${n.sub}</div>
+    </div>
+    <div class="notif-time">${n.time}</div>
+  </div>`).join('');
+}
+
+function renderSubscription(){
+  const el=document.getElementById('plans-grid');
+  if(!el)return;
+  el.innerHTML=plans.map(p=>`
+  <div class="plan-card${p.featured?' featured':''}">
+    ${p.badge?`<div class="plan-badge">${p.badge}</div>`:''}
+    <div class="plan-name">${p.name}</div>
+    <div class="plan-price"><sup>₹</sup>${p.price}<sub>${p.price==='0'?'':'/'+p.period}</sub></div>
+    <div class="plan-features">${p.features.map(f=>`
+    <div class="plan-feature">
+      <span class="material-symbols-rounded">check_circle</span>${f}
+    </div>`).join('')}</div>
+    <button class="btn${p.featured?' btn-primary':' btn-outline'}" style="width:100%;justify-content:center">${p.btn}</button>
+  </div>`).join('');
+}
+
+function renderAdmin(){
+  const el=document.getElementById('admin-stats');
+  if(el)el.innerHTML=adminStats.map(s=>`
+  <div class="stat-card">
+    <div class="stat-icon" style="background:${s.bg}"><span class="material-symbols-rounded" style="color:${s.c}">${s.icon}</span></div>
+    <div>
+      <div class="stat-val">${s.val}</div>
+      <div class="stat-lbl">${s.label}</div>
+      <div class="stat-chg ${s.up?'chg-up':'chg-dn'}">${s.chg} this month</div>
+    </div>
+  </div>`).join('');
+
+  const tbl=document.getElementById('admin-users-table');
+  if(tbl){
+    const rows=[
+      ['Alex Kumar','Music Producer','Mumbai','Pro','Active','2 days ago'],
+      ['Sanjana Rao','Graphic Designer','Bangalore','Free','Active','3 days ago'],
+      ['Priya Reddy','Photographer','Hyderabad','Pro','Active','5 days ago'],
+      ['Vivek Nair','Film Director','Chennai','Studio','Active','1 week ago'],
+      ['Meera Iyer','UI/UX Designer','Remote','Pro','Active','1 week ago'],
+    ];
+    tbl.innerHTML=`<thead><tr>${['Name','Role','Location','Plan','Status','Joined'].map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>i===4?`<td><span class="badge badge-green">${c}</span></td>`:i===3?`<td><span class="badge badge-primary">${c}</span></td>`:`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  }
+
+  const rb=document.getElementById('revenue-bars');
+  if(rb){
+    const rev=[
+      {label:'Pro Subscriptions',val:42,amt:'₹7.2L'},
+      {label:'Course Sales',val:28,amt:'₹4.8L'},
+      {label:'Studio Plans',val:16,amt:'₹2.8L'},
+      {label:'Featured Profiles',val:8,amt:'₹1.4L'},
+      {label:'Transaction Fee',val:6,amt:'₹1.0L'},
+    ];
+    rb.innerHTML=rev.map(r=>`
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px">
+        <span style="color:var(--text2)">${r.label}</span><span style="font-weight:700">${r.amt}</span>
+      </div>
+      <div style="height:8px;background:var(--bg2);border-radius:4px;overflow:hidden">
+        <div style="height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:${r.val}%;border-radius:4px;transition:width 1s ease"></div>
+      </div>
+    </div>`).join('');
+  }
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+function init(){
+  renderFeaturedCreatives();
+  renderTrendingServices();
+  renderHowItWorks();
+  renderDiscoverList();
+  renderFilterPills();
+  renderProfileTab('portfolio');
+  renderFeed();
+  renderMessages();
+  renderProjects();
+  renderOpportunities();
+  renderCollab();
+  renderCourses();
+  renderNotifications();
+  renderSubscription();
+  renderAdmin();
+}
+init();
+</script>
+</body>
+</html>
